@@ -1,0 +1,63 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ConsoleApp1
+{
+    internal class Program: Class1<double>
+    {
+        
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+
+            Console.WriteLine("\nEnter how much you spend monthly on Groceries \n");
+            double groceriesExpense = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("\nEnter how much you spend monthly on Water and Electricity \n");
+            double waterANDelect = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("\nEnter how much you spend monthly on Travelling (including petrol) \n");
+            double travellingExpense = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("\nEnter how much you spend monthly on Cellphone and Telephone \n");
+            double CellORtellExpense = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("\nEnter how much you spend monthly on Other expenses (e.g. Entertainment) ");
+            double otherExpenses = Convert.ToDouble(Console.ReadLine());
+
+            exps = new Dictionary<string, double>();
+            exps.Add("Groceries:\t", groceriesExpense);
+            exps.Add("Water & Electricity:\t", waterANDelect);
+            exps.Add("Travelling:\t", travellingExpense);
+            exps.Add("Cell:\t", CellORtellExpense);
+            exps.Add("Other Expense:\t", otherExpenses);
+
+            foreach (KeyValuePair<string, double> exp in exps.OrderByDescending(e => e.Value))
+            {
+                Console.WriteLine("{0}\t{1}", exp.Key, exp.Value);
+            }
+            double Sum = exps.Values.Sum();
+
+            Console.WriteLine("\n                                     Total: R" + Sum);
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ConsoleApp1
+{
+    abstract class Class1<T>
+    {
+        private static double sum;
+        public static Dictionary<string, T> exps;
+        private static double totalExpense;
+        public static double Sum { get => sum; set => sum = value; }
+        protected static double TotalExpense { get => totalExpense; set => totalExpense = value; }
+    }
+    }
+

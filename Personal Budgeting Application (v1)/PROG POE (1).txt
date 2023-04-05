@@ -1,0 +1,943 @@
+										Car Class
+									---------------------------
+<Window x:Class="Buying_A_Car.Car"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Buying_A_Car"
+        mc:Ignorable="d"
+        Title="BUY A CAR" Height="300" Width="700" FontSize="14" Background="#FF438211">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+
+        </Grid.RowDefinitions>
+
+        <Label x:Name="text1" Grid.Column="0" Grid.Row="0" Content="CAPTURE THE FOLLOWING DETAILS FOR THE CAR YOU PLAN ON BUYING"  FontWeight="Bold" Grid.ColumnSpan="3" HorizontalAlignment="Center"></Label>
+        <Label x:Name="priceLabel" Content="Purchase Price " Grid.Column="0" Grid.Row="1" FontWeight="Bold" Width="120" Height="30" FontStyle="Oblique"/>
+        <TextBox x:Name="priceText" Grid.Column="1" Grid.Row="1" Text="" Width="130" Height="25"></TextBox>
+        <Label x:Name="depositLabel" Content="Total Deposit" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Width="120" Height="30" FontStyle="Oblique"/>
+        <TextBox x:Name="depositText" Grid.Column="1" Grid.Row="2" Text="" Width="130" Height="25"></TextBox>
+        <Label x:Name="rateLabel" Content="Interest Rate (%)"  FontWeight="Bold" Grid.Column="0" Grid.Row="3" Width="120" Height="30" FontStyle="Oblique" />
+        <TextBox x:Name="rateText" Grid.Column="1" Grid.Row="3" Text="" Width="130" Height="25"></TextBox>
+        <Label x:Name="periodLabel" Content="Period (between 240 and 360 months)" FontWeight="Bold" Grid.Column="0" Grid.Row="4" Width="270" Height="30" FontStyle="Oblique" />
+        <TextBox x:Name="periodText" Grid.Column="1" Grid.Row="4" Text="" Width="130" Height="25"></TextBox>
+
+        <Button x:Name="TotalButton" Grid.Column="1" Grid.Row="5" Content="TOTAL" FontWeight="Bold" Click="TotalButton_Click" Background="#FF24DABD" />
+        <Label x:Name="TotalLabel" Content="Monthly you will be paying" Grid.Column="0" Grid.Row="6" FontWeight="Bold" Width="190" Height="30" HorizontalAlignment="Right" FontStyle="Oblique" />
+        <TextBox x:Name="TotalText" Grid.Column="1" Grid.Row="6" Text="" Width="130" Height="25"></TextBox>
+        <Label x:Name="TotalLabel2" Content="towards the car loan" Grid.Column="2" Grid.Row="6" FontWeight="Bold" FontStyle="Oblique"/>
+
+    </Grid>
+</Window>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Buying_A_Car
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class Car : Window
+    {
+        private static double monthlyPayment;
+        public double MonthlyPayment
+        {
+            get { return monthlyPayment; }
+            set { monthlyPayment = value; }
+        }
+        public Car()
+        {
+            InitializeComponent();
+        }
+
+        private void TotalButton_Click(object sender, RoutedEventArgs e)
+        {
+            {
+                double price, deposit, rate, period;
+
+                if (double.TryParse(priceText.Text, out price) & double.TryParse(depositText.Text, out deposit)
+                & double.TryParse(rateText.Text, out rate) & double.TryParse(periodText.Text, out period))
+                {
+                    double interestRate = rate / 100;
+                    double totDeposit = price - deposit;
+                    double totPeriod = period / 12;
+                    double A = totDeposit * (1 + interestRate * totPeriod);
+                    monthlyPayment = A / period;
+                    TotalText.Text = "" + monthlyPayment;
+
+                    MessageBox.Show("Your estimated monthly salary is R\n " +
+                        "Your estimated monthly tax deduction is R\n" +
+                        "Your monthly expenses add up to R\n" +
+                        "Your monthly accommodation payment is R\n" +
+                        "Your monthly car loan repayment is R " + monthlyPayment);
+                }
+            }
+        }
+    }
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+									RENTAL ACCOMMODATION 
+								   ------------------------------
+
+
+<Window x:Class="Renting_Accommodation.Renting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Renting_Accommodation"
+        mc:Ignorable="d"
+        Title="RENTING ACCOMMODATION" Height="450" Width="800" FontSize="14" Background="#FF438211">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!--<Label x:Name="rentLabel" Content="You Have Opted to Rent Accommodation" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" FontWeight="Bold" HorizontalAlignment="Center"/>
+        Remove this part after implementing inheritance -->
+        <Label x:Name="salaryLabel" Content="Enter salary" Grid.Column="0" Grid.Row="0" FontWeight="Bold" />
+        <TextBox x:Name="salaryText" Grid.Column="1" Grid.Row="0" Width="180" Height="40"/>
+
+        <Label x:Name="taxLabel" Content="Enter tax" Grid.Column="0" Grid.Row="1" FontWeight="Bold" />
+        <TextBox x:Name="taxText" Grid.Column="1" Grid.Row="1"  Width="180" Height="40"/>
+    <!---Remove till here and start editing the layout-->
+        <Label  x:Name="rentPayLabel" Content="Enter the monthly rental amount" Grid.Column="0" Grid.Row="2" FontWeight="Bold"  Width="230" Height="40"/>
+        <TextBox x:Name="rentPayText" Grid.Column="1" Grid.Row="2"  Width="180" Height="40"/>
+        <Label  x:Name="totalLabel1" Content="You will be left with R" Grid.Column="0" Grid.Row="3"  Width="180" Height="40" HorizontalAlignment="Right"/>
+        <TextBox x:Name="totalText" Grid.Column="1" Grid.Row="3" Width="180" Height="40"/>
+        <Label  x:Name="totalLabel2" Content="after rent has been deducted" Grid.Column="2" Grid.Row="3" Width="190" Height="40" HorizontalAlignment="Left"/>
+        <Button x:Name="totalButton" Content="TOTAL" Grid.Column="1" Grid.Row="4" FontWeight="Bold" Background="#FF46D0DA" Click="totalButton_Click" RenderTransformOrigin="0.624,0.289"/>
+
+        <Label  x:Name="CarLabel" Content="Do you plan on buying a car?" Grid.Column="0" Grid.Row="5" Width="190" Height="40" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="ComboBox1" Grid.Column="1"  Grid.Row="5" VerticalAlignment="Center">
+            <ComboBoxItem Content="NO"/>
+            <ComboBoxItem Content="YES"/>
+        </ComboBox>
+
+    </Grid>
+</Window>
+
+Height="600" Width="900" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="0.25*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="7"
+                Grid.ColumnSpan="4"
+                CornerRadius="100">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="OrangeRed" Offset="0.0"/>
+                    <GradientStop Color="DarkOliveGreen" Offset="0.8"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Button Grid.Column="3" Grid.Row="0"
+                Background="Transparent"
+                Foreground="White"
+                BorderThickness="1.5"
+                Content="X"
+                BorderBrush="White" 
+                Margin="249,0,202,136" 
+                Grid.RowSpan="3">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Label x:Name="rentAmountLabel" 
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       Content="Enter the monthly rental amount"
+                       FontSize="25"
+                       Foreground="White" 
+                       RenderTransformOrigin="0.503,0.594" 
+                       Margin="10,63,314,28"/>
+        <TextBox x:Name="rentAmountText"
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       RenderTransformOrigin="0.503,0.594" 
+                       Margin="391,49,51,42">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+
+        <TextBox x:Name="TotalText"
+                Grid.Column="1" 
+                Grid.Row="1" 
+                RenderTransformOrigin="0.503,0.594" 
+                 Margin="391,17,51,10"/>
+        <Button x:Name="TotalButton" Grid.Column="1"  
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Foreground="White"
+                Width="226"
+                Content="TOTAL"
+                FontSize="40"
+                FontWeight="Bold"
+                BorderThickness="1.5"
+                BorderBrush="White" 
+                Margin="54,17,0,10" 
+                Grid.Row="1" Click="TotalButton_Click" >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+        <Button x:Name="ContinueButton1"
+                Grid.Row="3" Grid.Column="1"  
+                HorizontalAlignment="Center"
+                Background="Transparent"
+                Foreground="White"
+                Height="80"
+                Width="290"
+                Content="CONTINUE"
+                FontSize="40"
+                FontWeight="Bold"
+                BorderThickness="1.5"
+                BorderBrush="White">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+        <Label x:Name="CarLabel"
+                       Grid.Column="1" 
+                       Grid.Row="2" 
+                       Content="Do you plan on buying a car?" 
+                       FontSize="25"
+                       Foreground="White" 
+                       RenderTransformOrigin="0.503,0.594" 
+                       Margin="24,63,334,41" />
+
+        <ComboBox x:Name="ComboBox1" 
+                  Grid.Column="1"  
+                  Grid.Row="2"
+                  Height="58"
+                  VerticalAlignment="Top" 
+                  Margin="391,63,51,0" 
+                  RenderTransformOrigin="0.5,0.5" 
+                  >
+            <ComboBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ComboBox.RenderTransform>
+            <ComboBoxItem Content="YES"/>
+            <ComboBoxItem Content="NO"/>
+        </ComboBox>
+
+RentalAccomodation
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Renting_Accommodation
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class Renting : Window
+    {
+        public Renting()
+        {
+            InitializeComponent();
+        }
+
+        private void totalButton_Click(object sender, RoutedEventArgs e)
+        {
+            double total, tax, salary, rent;
+
+            if (double.TryParse(salaryText.Text, out salary) & double.TryParse(taxText.Text, out tax)
+                 & double.TryParse(rentPayText.Text, out rent))
+            {
+                total = salary - tax - rent;
+               totalText.Text = "R " + total;
+            }
+            }
+
+    }
+}
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+									BUYING A PROPERTY 
+								   ------------------------------
+
+<Window x:Class="Buying_Property.Buying"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Buying_Property"
+        mc:Ignorable="d"
+        Title="BUYING PROPERTY" Height="400" Width="700" FontSize="14" Background="#FF438211">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+
+        </Grid.RowDefinitions>
+
+        <Label x:Name="text1" Grid.Column="0" Grid.Row="0" Content="CAPTURE THE FOLLOWING INFORMATION ABOUT THE PROPERTY YOU PLAN ON BUYING:"  FontWeight="Bold" Grid.ColumnSpan="3" HorizontalAlignment="Center" Background="Transparent"></Label>
+        <Label x:Name="priceLabel" Content="Purchase Price " Grid.Column="0" Grid.Row="1" Width="150" Height="30" FontWeight="Bold"/>
+        <TextBox x:Name="priceText" Grid.Column="1" Grid.Row="1" Text=""  Width="150" Height="30"></TextBox>
+        <Label x:Name="depositLabel" Content="Total Deposit" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Width="150" Height="30"/>
+        <TextBox x:Name="depositText" Grid.Column="1" Grid.Row="2" Text="" Width="150" Height="30"></TextBox>
+        <Label x:Name="rateLabel" Content="Interest Rate (%)"  FontWeight="Bold" Grid.Column="0" Grid.Row="3"  Width="150" Height="30"/>
+        <TextBox x:Name="rateText" Grid.Column="1" Grid.Row="3" Text="" Width="150" Height="30"></TextBox>
+        <Label x:Name="periodLabel" Content="Period (between 240 and 360 months)" FontWeight="Bold" Grid.Column="0" Grid.Row="4"  Width="270" Height="30"/>
+        <TextBox x:Name="periodText" Grid.Column="1" Grid.Row="4" Text="" Width="150" Height="30"></TextBox>
+
+        <Button x:Name="TotalButton" Grid.Column="1" Grid.Row="5" Content="TOTAL" FontWeight="Bold" FontSize="18" Click="TotalButton_Click" Background="#FF083C06" />
+        <Label x:Name="TotalLabel" Content="Monthly you will be paying : R " Grid.Column="0" Grid.Row="6" FontWeight="Bold"  Width="190" Height="30"/>
+        <TextBox x:Name="TotalText" Grid.Column="1" Grid.Row="6" Text="" Width="150" Height="30"></TextBox>
+        <Label x:Name="TotalLabel2" Content="towards the home loan" Grid.Column="2" Grid.Row="6" FontWeight="Bold"  Width="190" Height="30"/>
+
+        <Label x:Name="CarLabel" Content="Do you plan on buying a car?" Grid.Column="0" Grid.Row="8" FontWeight="Bold"  Width="200" Height="30"/>
+        <ComboBox x:Name="ComboBox1" Grid.Column="1"  Grid.Row="8" VerticalAlignment="Center">
+            <ComboBoxItem Content="NO"/>
+            <ComboBoxItem Content="YES"/>
+        </ComboBox>
+        
+    </Grid>
+</Window>
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Buying_Property
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class Buying : Window
+    {
+        private static double monthlyPay;
+        public Buying()
+        {
+            InitializeComponent();
+        }
+
+        private void TotalButton_Click(object sender, RoutedEventArgs e)
+        {
+            double price, deposit, rate, period;
+
+            if (double.TryParse(priceText.Text, out price) & double.TryParse(depositText.Text, out deposit)
+            & double.TryParse(rateText.Text, out rate) & double.TryParse(periodText.Text, out period))
+            {
+                double interestRate = rate / 100;
+                double totDeposit = price - deposit;
+                double totPeriod = period / 12;
+                double A = totDeposit * (1 + interestRate * totPeriod);
+                monthlyPay = A / period;
+                TotalText.Text = "R " + monthlyPay;
+            }
+        }
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+									  MAIN WINDOW 
+								      ------------------
+
+Window x:Class="Personal_Budgeting_App_POE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Personal_Budgeting_App_POE"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="900">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="380"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="550"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="text1" Grid.Column="1" Grid.Row="0" Content="Capture the following:"  FontWeight="Bold" Grid.ColumnSpan="3"></Label>
+        <Label x:Name="salaryLabel" Content="Monthly Salary " Grid.Column="0" Grid.Row="1"  FontWeight="Bold"  />
+        <TextBox x:Name="salaryText" Grid.Column="1" Grid.Row="1" Text=""></TextBox>
+        <Label x:Name="taxLabel" Content="Tax Deduction   " Grid.Column="0" Grid.Row="2"  FontWeight="Bold"  />
+        <TextBox x:Name="taxText" Grid.Column="1" Grid.Row="2" Text=""></TextBox>
+
+        <!--For expenses -->
+        <Label x:Name="expenseLabel" Grid.Row="3" Content="           **************************EXPENSES****************************"  FontWeight="Bold" Grid.ColumnSpan="3" HorizontalAlignment="Center"></Label>
+        <Label x:Name="expense1Label" Content="Groceries" Grid.Column="0" Grid.Row="4" FontWeight="Bold"/>
+        <TextBox x:Name="expense1Text" Grid.Column="1" Grid.Row="4" Text="" ></TextBox>
+        <Label x:Name="expense2Label" Content="Water and Electricity" FontWeight="Bold" Grid.Column="0" Grid.Row="5" />
+        <TextBox x:Name="expense2Text" Grid.Column="1" Grid.Row="5" Text=""></TextBox>
+        <Label x:Name="expense3Label" Content="Travelling"  FontWeight="Bold" Grid.Column="0" Grid.Row="6" />
+        <TextBox x:Name="expense3Text" Grid.Column="1" Grid.Row="6" Text=""></TextBox>
+        <Label x:Name="expense4Label" Content="Cellphone and Telephone" FontWeight="Bold" Grid.Column="0" Grid.Row="7" />
+        <TextBox x:Name="expense4Text" Grid.Column="1" Grid.Row="7" Text=""></TextBox>
+        <Label x:Name="expense5Label" Content="Other (e.g Entertainment)" FontWeight="Bold" Grid.Column="0" Grid.Row="8" />
+        <TextBox x:Name="expense5Text" Grid.Column="1" Grid.Row="8" Text=""></TextBox>
+
+        <Label x:Name="expenseTotalLabel" Content="   ***Total of Expenses***" Grid.Column="2" Grid.Row="9" FontWeight="Bold" HorizontalAlignment="Left" />
+        <TextBox x:Name="expenseTotalText" Grid.Column="1" Grid.Row="9" Text=""></TextBox>
+
+        <Button x:Name="TotalButton" Grid.Column="0" Grid.Row="9" Content="TOTAL" FontWeight="Bold" Background="#FF24DABD" Click="TotalButton_Click" />
+
+        <Label x:Name="HousingLabel" Content="Choose Accommodation type " Grid.Column="0" Grid.Row="10" FontWeight="Bold" />
+        <Button x:Name="RentButton" Content="Renting"  Grid.Column="1" Grid.Row="10" FontWeight="Bold" Background="#FF1B942D" Click="RentButton_Click" />
+        <Button x:Name="BuyButton" Content="Buy property"  Grid.Column="1" Grid.Row="11" FontWeight="Bold" Background="#FFC0DA24" Click="BuyButton_Click" />
+    </Grid>
+</Window>
+
+
+using Buy_Property;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Personal_Budgeting_App_POE
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        protected static double salary;
+        protected static double tax;
+        protected static double total;
+        protected static double total1;
+        public double Salary
+        {
+            get { return salary; }
+            set { salary = value; }
+        }
+        public double Tax
+        {
+            get { return tax; }
+            set { tax = value; }
+        }
+        public double Total
+        {
+            get { return total; }
+            set { total = value; }
+        }
+        public double Total1
+        {
+            get { return total1; }
+            set { total = value; }
+        }
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        private void TotalButton_Click(object sender, RoutedEventArgs e)
+        {
+            double groceries, waterNelect, travelling, cellNtell, otherExps;
+
+            if (double.TryParse(salaryText.Text, out salary) & double.TryParse(taxText.Text, out tax))
+            {
+
+                total = salary - tax;
+            }
+
+            if (double.TryParse(expense1Text.Text, out groceries) & double.TryParse(expense2Text.Text, out waterNelect)
+                & double.TryParse(expense3Text.Text, out travelling) & double.TryParse(expense4Text.Text, out cellNtell)
+                & double.TryParse(expense5Text.Text, out otherExps))
+            {
+                Dictionary<string, double> Exp = new Dictionary<string, double>()
+                {{"Groceries:\t",groceries},
+                {"water and electricity:\t",waterNelect},
+                { "travelling:\t",travelling},
+                { "cellphone and tellphone :\t",cellNtell},
+                { "other expsenses:\t",otherExps}};
+
+                foreach (KeyValuePair<string, double> ele in Exp.OrderByDescending(e => e.Value))
+                    _ = ("{0}\t{1}", ele.Key, ele.Value);
+
+                double total1 = total - Exp.Values.Sum();
+                expenseTotalText.Text = "R " + total1;
+            }
+    }
+
+        private void BuyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Buying buy = new Buying();
+            buy.ShowDialog();
+        }
+    }
+}
+
+======================================================================================================================================
+ Title="MainWindow" Height="700" Width="1050" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" 
+         AllowsTransparency="True" Background="Transparent">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="428"/>
+            <ColumnDefinition Width="440"/>
+            <ColumnDefinition Width="140"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.0*"/>
+            <RowDefinition Height="0.20*"/>
+            <RowDefinition Height="0.20*"/>
+            <RowDefinition Height="0.20*"/>
+            <RowDefinition Height="0.20*"/>
+            <RowDefinition Height="0.20*"/>
+            <RowDefinition Height="0.0*"/>
+
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="6"
+                Grid.ColumnSpan="4"
+                CornerRadius="100">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="OrangeRed" Offset="0.0"/>
+                    <GradientStop Color="DarkOliveGreen" Offset="0.8"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Button Grid.Column="3" Grid.Row="0"
+                Background="Transparent"
+                Foreground="White"
+                BorderThickness="1.5"
+                Content="X"
+                BorderBrush="White" Margin="249,0,-217,136" Grid.RowSpan="3">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Label x:Name="priceLabel" 
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Content="Purchase Price"
+                       FontSize="25"
+                       Foreground="White" 
+                       RenderTransformOrigin="0.503,0.594" Margin="52,10,0,69"/>
+        <TextBox x:Name="priceText"
+                       Grid.Column="1" 
+                       Grid.Row="1" 
+                       RenderTransformOrigin="0.503,0.594" Margin="52,63,66,10"/>
+        <Label x:Name="depositLabel" 
+               Grid.Column="2" 
+               Grid.Row="1" 
+               Content="Total Deposit"
+               FontSize="25" 
+               Foreground="White" 
+               RenderTransformOrigin="0.503,0.594" Margin="55,10,79,74"/>
+        <TextBox x:Name="depositText"
+                Grid.Column="2" 
+               Grid.Row="1" 
+               RenderTransformOrigin="0.503,0.594" Margin="55,0,79,10" Height="64" VerticalAlignment="Bottom"/>
+
+        <TextBox x:Name="rateText"
+                Grid.Column="1" 
+               Grid.Row="2" 
+               RenderTransformOrigin="0.503,0.594" Margin="52,61,66,20">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="rateLabel" 
+                       Grid.Column="1"
+                       Grid.Row="2"
+                       Content="Interest Rate (%)"
+                       FontSize="28"
+                       Foreground="White" Margin="52,10,84,69" 
+                       />
+        <TextBox x:Name="periodText"
+                Grid.Column="2" 
+               Grid.Row="2" Margin="50,68,78,15" 
+               >
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.231"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="periodLabel" 
+                       Grid.Column="2"
+                       Grid.Row="2"
+                       Content="Period (between 240 and 360 months)"
+                       FontSize="25"
+                       Foreground="White" Margin="0,0,10,98" RenderTransformOrigin="0.5,0.5" 
+                       >
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+
+        <TextBox x:Name="TotalText"
+                Grid.Column="2" 
+               Grid.Row="3" Margin="55,34,79,34" 
+               />
+        <Button x:Name="TotalButton"
+                Grid.Row="3" Grid.Column="1"  
+                HorizontalAlignment="Center"
+                Background="Transparent"
+                Foreground="White"
+                Width="246"
+                Content="TOTAL"
+                FontSize="40"
+                FontWeight="Bold"
+                BorderThickness="1.5"
+                BorderBrush="White" Margin="0,24,0,24" Click="TotalButton_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+        <Button x:Name="ContinueButton1"
+                Grid.Row="5" Grid.Column="1"  
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Foreground="White"
+                Width="362"
+                Content="CONTINUE"
+                FontSize="40"
+                FontWeight="Bold"
+                BorderThickness="1.5"
+                BorderBrush="White" Margin="286,10,0,10" Grid.ColumnSpan="2">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="White"/>
+                            <Setter Property="Button.Opacity" Value="3.6"/>
+                            <Setter Property="Button.Foreground" Value="#224557"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+        <Label x:Name="CarLabel"
+                       Grid.Column="1" 
+                        Grid.Row="3" 
+                       Content="Do you plan on buying a car ?" 
+                       FontSize="25"
+                       Foreground="White" 
+                       Margin="52,136,0,89" Grid.RowSpan="2"/>
+
+        <ComboBox x:Name="ComboBox3" 
+        Grid.Column="1"  
+        Grid.Row="4"
+                  Height="69"
+        VerticalAlignment="Top" Margin="52,126,66,0" Grid.RowSpan="2">
+            <ComboBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                </TransformGroup>
+            </ComboBox.RenderTransform>
+        </ComboBox>
+
+    </Grid>
+</Window>
+
+using Expenditure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Buying_A_Property
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class Property : Window
+    {
+        public static double price;
+        public static double deposit;
+        public static double rate;
+        public static double period;
+        protected static double monthlyPay;
+        protected static double total2;
+        public static double MonthlyPay
+        {
+            get { return monthlyPay; }
+            set { monthlyPay = value; }
+        }
+        public double Total2
+        {
+            get { return total2; }
+            set { total2 = value; }
+        }
+        public Property()
+        {
+            InitializeComponent();
+            
+            ComboBox3.Items.Add("YES");
+            ComboBox3.Items.Add("NO");
+        }
+
+        private void TotalButton_Click(object sender, RoutedEventArgs e)
+        {
+            Expense expense = new Expense();
+
+            if (double.TryParse(priceText.Text, out price) & double.TryParse(depositText.Text, out deposit)
+            & double.TryParse(rateText.Text, out rate) & double.TryParse(periodText.Text, out period))
+            {
+                double interestRate = rate / 100;
+                double totDeposit = price - deposit;
+                double totPeriod = period / 12;
+                double A = totDeposit * (1 + interestRate * totPeriod);
+                monthlyPay = A / period;
+                TotalText.Text = "R " + monthlyPay;
+            }
+            
+        }
+        private static void thirdPortion() {
+            {
+                Expense expense = new Expense();
+                total2 = 1 / expense.Salary;
+
+                if(monthlyPay > total2)
+                {
+                    MessageBox.Show("Your monthly loan repayment is more than a third of your salary." +
+                        "\nYour applications has more chances of not being approved.");
+
+                    MessageBox.Show("Actual price of the property: R " + price +
+                            "\n             Total Deposit: R " + deposit +
+                            "\n          Interest Rate(%): R " + rate +
+                            "\n    Period to pay the loan: R " + period +
+                            "\n                   TOTAL: R " + monthlyPay +
+                            "\nEach month you will be paying R " + monthlyPay + " towards the home loan" +
+                            "\n\n                    TOTAL: R " + (expense.Total - monthlyPay));
+                }
+                else
+                {
+                    MessageBox.Show("Actual price of the property: R " + price +
+                            "\n             Total Deposit: R " + deposit +
+                            "\n          Interest Rate(%): R " + rate +
+                            "\n    Period to pay the loan: R " + period +
+                            "\n                   TOTAL: R " + monthlyPay +
+                            "\nEach month you will be paying R " + monthlyPay + " towards the home loan" +
+                            "\n\n                    TOTAL: R " + (expense.Total - monthlyPay));
+                }
+
+            }
+        }
+
+        private void ComboBox3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ComboBox3.Text == "YES")
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+}
